@@ -10,7 +10,7 @@ namespace WardenAnd23Prisoners
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //Setup
             Random random = new Random();
 
             //Initalize Switches
@@ -30,7 +30,7 @@ namespace WardenAnd23Prisoners
             //Initalize Warden
             IWarden warden = new Warden(switchRoom, prisoners);
 
-            //Make Warden Execute the Plan
+            //Execute
             do
             {
                 warden.Action();
