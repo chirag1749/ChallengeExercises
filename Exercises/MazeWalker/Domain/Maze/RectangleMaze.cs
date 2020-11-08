@@ -105,11 +105,9 @@ namespace MazeWalker.Domain.Maze
                         {
                             case BuildingBlockType.Wall:
                                 buildingBlock = mazeBuilder.CreateWall(location);
-                                Walls.Add(buildingBlock as IWall);
                                 break;
                             case BuildingBlockType.Path:
                                 buildingBlock = mazeBuilder.CreatePath(location);
-                                Paths.Add(buildingBlock as IPath);
                                 break;
                             default:
                                 throw new NotImplementedException();
