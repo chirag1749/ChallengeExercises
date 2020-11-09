@@ -50,7 +50,7 @@ namespace MazeWalker
             } while (!walker.FoundExit());
 
             //Finalize
-            Console.WriteLine("Walker is Free!");
+            Console.WriteLine("Walker found the exit!");
         }
     }
 }

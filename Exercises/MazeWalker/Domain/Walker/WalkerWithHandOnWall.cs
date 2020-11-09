@@ -9,8 +9,6 @@ namespace MazeWalker.Domain.Walker
     public abstract class WalkerWithHandOnWall:  IWalker
     {
         protected Direction FaceDirection;
-        protected Dictionary<Direction, Direction> ClockWiseDirection;
-        protected Dictionary<Direction, Direction> CounterClockWiseDirection;
         protected ILocation BodyLocation;
         protected ILocation HandLocation;
 
@@ -18,24 +16,15 @@ namespace MazeWalker.Domain.Walker
         protected bool AtExitLocation;
         protected Hand Hand;
 
+        List<IPath> PathsTaken;
+
         public WalkerWithHandOnWall(IMaze maze, Hand hand)
         {
             Maze = maze;
             BodyLocation = Maze.GetStartLocation();
             AtExitLocation = false;
             Hand = hand;
-
-            ClockWiseDirection = new Dictionary<Direction, Direction>();
-            ClockWiseDirection.Add(Direction.North, Direction.East);
-            ClockWiseDirection.Add(Direction.East, Direction.South);
-            ClockWiseDirection.Add(Direction.South, Direction.West);
-            ClockWiseDirection.Add(Direction.West, Direction.North);
-
-            CounterClockWiseDirection = new Dictionary<Direction, Direction>();
-            CounterClockWiseDirection.Add(Direction.North, Direction.West);
-            CounterClockWiseDirection.Add(Direction.West, Direction.South);
-            CounterClockWiseDirection.Add(Direction.South, Direction.East);
-            CounterClockWiseDirection.Add(Direction.East, Direction.North);
+            PathsTaken = new List<IPath>();
 
             Dictionary<Direction, IBuildingBlock> neighbors = Maze.GetNeighboringBuildingBlocks(BodyLocation);
 
@@ -52,7 +41,6 @@ namespace MazeWalker.Domain.Walker
 
             Console.WriteLine(string.Format("Start: Hand Location {0},{1}", HandLocation.GetLatitude().GetIdentifier().ToString(), HandLocation.GetLongitude().GetIdentifier().ToString()));
             Console.WriteLine(string.Format("Start: Body Location {0},{1}", BodyLocation.GetLatitude().GetIdentifier().ToString(), BodyLocation.GetLongitude().GetIdentifier().ToString()));
-
         }
 
         public virtual bool FoundExit()
@@ -114,6 +102,7 @@ namespace MazeWalker.Domain.Walker
                 {
                     BodyLocation = neighbors[FaceDirection].GetLocation();
                     Console.WriteLine(string.Format("Body Location {0},{1}", BodyLocation.GetLatitude().GetIdentifier().ToString(), BodyLocation.GetLongitude().GetIdentifier().ToString()));
+                    PathsTaken.Add(neighbors[FaceDirection] as IPath);
                     return true;
                 }
             }
@@ -160,6 +149,11 @@ namespace MazeWalker.Domain.Walker
         protected virtual void ChangeDirectionBecauseDidNotWalk()
         {
             FaceDirection = Hand.GetCounterDirection(FaceDirection);
+        }
+
+        public List<IPath> GetPaths()
+        {
+            return PathsTaken;
         }
     }
 }
