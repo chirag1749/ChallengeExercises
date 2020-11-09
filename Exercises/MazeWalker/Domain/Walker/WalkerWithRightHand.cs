@@ -2,9 +2,9 @@
 
 namespace MazeWalker.Domain.Walker
 {
-    public class WalkerWithRightHand: WalkerWithHandOnWall
+    public class WalkerWithRightHand : WalkerWithHandOnWall
     {
-        public WalkerWithRightHand(IMaze maze) : base(maze, Side.Right)
+        public WalkerWithRightHand(IMaze maze) : base(maze, Side.Right.GetHand())
         { }
     }
 }
