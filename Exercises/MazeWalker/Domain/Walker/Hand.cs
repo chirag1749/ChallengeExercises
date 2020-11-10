@@ -4,15 +4,15 @@ using MazeWalker.Domain.Location;
 
 namespace MazeWalker.Domain.Walker
 {
-    public class Hand : Attribute
+    public class Hand : Attribute, IHand
     {
-        RotateDirection HandDirection;
+        RotateDirection RotateDirection;
         Dictionary<Direction, Direction> ClockWiseDirection;
         Dictionary<Direction, Direction> CounterClockWiseDirection;
 
-        public Hand(RotateDirection handDirection)
+        public Hand(RotateDirection rotateDirection)
         {
-            HandDirection = handDirection;
+            RotateDirection = rotateDirection;
 
             ClockWiseDirection = new Dictionary<Direction, Direction>();
             ClockWiseDirection.Add(Direction.North, Direction.East);
@@ -29,7 +29,7 @@ namespace MazeWalker.Domain.Walker
 
         public Direction GetDirection(Direction faceDirection)
         {
-            switch(HandDirection)
+            switch(RotateDirection)
             {
                 case RotateDirection.Clockwise:
                     return ClockWiseDirection[faceDirection];
@@ -42,7 +42,7 @@ namespace MazeWalker.Domain.Walker
 
         public Direction GetCounterDirection(Direction faceDirection)
         {
-            switch (HandDirection)
+            switch (RotateDirection)
             {
                 case RotateDirection.Clockwise:
                     return CounterClockWiseDirection[faceDirection];
