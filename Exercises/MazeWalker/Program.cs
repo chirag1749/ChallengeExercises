@@ -8,11 +8,9 @@ namespace MazeWalker
 {
     class MainClass
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             //Setup
-            IMazeBuilder mazeBuilder = new RectangleMazeBuilder();
-
             string schema = @"  # # # # # # # # # # # #
                                 # . . . # . . . . . . #
                                 . . # . # . # # # # . #
@@ -26,6 +24,7 @@ namespace MazeWalker
                                 # . . . . . . # . . . #
                                 # # # # # # # # # # # #";
 
+            IMazeBuilder mazeBuilder = new RectangleMazeBuilder();
             IBuildingBlockIdentifier wallIdentifier = mazeBuilder.CreateBuildingBlockIdentifier(BuildingBlockType.Wall, "#");
             IBuildingBlockIdentifier pathIdentifier = mazeBuilder.CreateBuildingBlockIdentifier(BuildingBlockType.Path, ".");
 

@@ -8,17 +8,17 @@ namespace MazeWalker.Domain.Walker
 {
     public abstract class WalkerWithHandOnWall:  IWalker
     {
+        IMaze Maze;
+        IHand Hand;
+
         protected Direction FaceDirection;
         protected ILocation BodyLocation;
         protected ILocation HandLocation;
-
-        protected IMaze Maze;
         protected bool AtExitLocation;
-        protected Hand Hand;
 
         List<IPath> PathsTaken;
 
-        public WalkerWithHandOnWall(IMaze maze, Hand hand)
+        public WalkerWithHandOnWall(IMaze maze, IHand hand)
         {
             Maze = maze;
             BodyLocation = Maze.GetStartLocation();
@@ -26,15 +26,15 @@ namespace MazeWalker.Domain.Walker
             Hand = hand;
             PathsTaken = new List<IPath>();
 
-            Dictionary<Direction, IBuildingBlock> neighbors = Maze.GetNeighboringBuildingBlocks(BodyLocation);
+            Dictionary<Direction, IBuildingBlock> buildingBlocksAroundBodyLocation = Maze.GetNeighboringBuildingBlocks(BodyLocation);
 
-            FaceDirection = (from kvp in neighbors
+            FaceDirection = (from kvp in buildingBlocksAroundBodyLocation
                              where kvp.Value.GetBuildingBlockType() == BuildingBlockType.Path
                              select kvp.Key).FirstOrDefault();
 
             Console.WriteLine(string.Format("Start: Face Direction {0}", FaceDirection.ToString()));
 
-            PutHandOnWall(neighbors);
+            PutHandOnWall(buildingBlocksAroundBodyLocation);
 
             if (HandLocation == null)
                 throw new Exception("Not able to touch the wall.");
@@ -94,15 +94,15 @@ namespace MazeWalker.Domain.Walker
 
         protected virtual bool MoveBody()
         {
-            Dictionary<Direction, IBuildingBlock> neighbors = Maze.GetNeighboringBuildingBlocks(BodyLocation);
+            Dictionary<Direction, IBuildingBlock> buildingBlocksAroundBodyLocatoin = Maze.GetNeighboringBuildingBlocks(BodyLocation);
 
-            if (neighbors.ContainsKey(FaceDirection))
+            if (buildingBlocksAroundBodyLocatoin.ContainsKey(FaceDirection))
             {
-                if (neighbors[FaceDirection].GetBuildingBlockType() == BuildingBlockType.Path)
+                if (buildingBlocksAroundBodyLocatoin[FaceDirection].GetBuildingBlockType() == BuildingBlockType.Path)
                 {
-                    BodyLocation = neighbors[FaceDirection].GetLocation();
+                    BodyLocation = buildingBlocksAroundBodyLocatoin[FaceDirection].GetLocation();
                     Console.WriteLine(string.Format("Body Location {0},{1}", BodyLocation.GetLatitude().GetIdentifier().ToString(), BodyLocation.GetLongitude().GetIdentifier().ToString()));
-                    PathsTaken.Add(neighbors[FaceDirection] as IPath);
+                    PathsTaken.Add(buildingBlocksAroundBodyLocatoin[FaceDirection] as IPath);
                     return true;
                 }
             }
@@ -110,24 +110,15 @@ namespace MazeWalker.Domain.Walker
             return false;
         }
 
-        protected virtual bool MoveHand(bool toCorner = false)
+        protected virtual bool MoveHand(bool ignoreWallValidation = false)
         {
-            Dictionary<Direction, IBuildingBlock> neighbors = Maze.GetNeighboringBuildingBlocks(HandLocation);
+            Dictionary<Direction, IBuildingBlock> buildingBlocksAroundHandLocation = Maze.GetNeighboringBuildingBlocks(HandLocation);
 
-            if (neighbors.ContainsKey(FaceDirection))
+            if (buildingBlocksAroundHandLocation.ContainsKey(FaceDirection))
             {
-                if (!toCorner)
+                if (ignoreWallValidation || buildingBlocksAroundHandLocation[FaceDirection].GetBuildingBlockType() == BuildingBlockType.Wall)
                 {
-                    if (neighbors[FaceDirection].GetBuildingBlockType() == BuildingBlockType.Wall)
-                    {
-                        HandLocation = neighbors[FaceDirection].GetLocation();
-                        Console.WriteLine(string.Format("Hand Location {0},{1}", HandLocation.GetLatitude().GetIdentifier().ToString(), HandLocation.GetLongitude().GetIdentifier().ToString()));
-                        return true;
-                    }
-                }
-                else
-                {
-                    HandLocation = neighbors[FaceDirection].GetLocation();
+                    HandLocation = buildingBlocksAroundHandLocation[FaceDirection].GetLocation();
                     Console.WriteLine(string.Format("Hand Location {0},{1}", HandLocation.GetLatitude().GetIdentifier().ToString(), HandLocation.GetLongitude().GetIdentifier().ToString()));
                     return true;
                 }
@@ -136,9 +127,9 @@ namespace MazeWalker.Domain.Walker
             return false;
         }
 
-        protected virtual void PutHandOnWall(Dictionary<Direction, IBuildingBlock> neighbors)
+        protected virtual void PutHandOnWall(Dictionary<Direction, IBuildingBlock> buildingBlocksAroundCurrentLocation)
         {
-            HandLocation = neighbors[Hand.GetDirection(FaceDirection)].GetLocation();
+            HandLocation = buildingBlocksAroundCurrentLocation[Hand.GetDirection(FaceDirection)].GetLocation();
         }
 
         protected virtual void ChangeDirectionBecauseDidNotMoveHand()
