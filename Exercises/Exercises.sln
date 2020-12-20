@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardenAnd23Prisoners", "War
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeWalker", "MazeWalker\MazeWalker.csproj", "{BCC4FF7F-7A65-4A57-BED0-D5504A1B5ACF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseToMakeEqual", "ReverseToMakeEqual\ReverseToMakeEqual.csproj", "{EA37A598-AC8A-47C5-BAC8-77F8E2FC8F8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,5 +27,9 @@ Global
 		{BCC4FF7F-7A65-4A57-BED0-D5504A1B5ACF}.Debug|x86.Build.0 = Debug|x86
 		{BCC4FF7F-7A65-4A57-BED0-D5504A1B5ACF}.Release|x86.ActiveCfg = Release|x86
 		{BCC4FF7F-7A65-4A57-BED0-D5504A1B5ACF}.Release|x86.Build.0 = Release|x86
+		{EA37A598-AC8A-47C5-BAC8-77F8E2FC8F8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA37A598-AC8A-47C5-BAC8-77F8E2FC8F8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA37A598-AC8A-47C5-BAC8-77F8E2FC8F8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA37A598-AC8A-47C5-BAC8-77F8E2FC8F8B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
