@@ -8,7 +8,7 @@ namespace ReverseToMakeEqual
         static void Main(string[] args)
         {
             testAreTheyEqual(1, new int[] { 1, 3, 5, 7, 9, 9, 1000000000 }, new int[] { 1, 3, 5, 7, 9, 9, 1000000000 }, true);
-            testAreTheyEqual(2, new int[] { 1, 2, 3, 4 }, new int[] { 1, 4, 2, 3 }, true);
+            testAreTheyEqual(2, new int[] { 1, 2, 3, 4 }, new int[] { 4, 3, 1, 2 }, true);
             testAreTheyEqual(3, new int[] { 1, 2, 3, 4 }, new int[] { 1, 4, 3, 2, 8 }, false);
             testAreTheyEqual(4, null, new int[] { 1, 4, 3, 2 }, false);
 
@@ -23,12 +23,12 @@ namespace ReverseToMakeEqual
             Console.WriteLine("Test Complete.");
         }
 
-        private static void testAreTheyEqual(int testCaseIdentifier, int[] arr_a, int[] arr_b, bool resultValue)
+        private static void testAreTheyEqual(int testCaseIdentifier, int[] arr_a, int[] arr_b, bool expectedResult)
         {
-            bool trueTestCase = areTheyEqual(arr_a, arr_b);
+            bool actualResult = areTheyEqual(arr_a, arr_b);
 
             //Assert
-            if (trueTestCase != resultValue)
+            if (actualResult != expectedResult)
                 Console.WriteLine(string.Format("Test Case {0} Failed. ", testCaseIdentifier.ToString()));
         }
 
@@ -44,12 +44,12 @@ namespace ReverseToMakeEqual
         
         private static void makeThemEqual(int[] arr_a, int[] arr_b)
         {
-            List<int> new_arr_b = new List<int>();
+            int indexToSort = 0;
             Dictionary<int, int> reverseLengthByIndex = new Dictionary<int, int>();
 
             do
             {
-                for (int index = new_arr_b.Count; index < arr_a.Length; index++)
+                for (int index = indexToSort; index < arr_a.Length; index++)
                 {
                     if (arr_a[index] != arr_b[index])
                     {
@@ -65,9 +65,9 @@ namespace ReverseToMakeEqual
                         break;
                     }
                      else
-                        new_arr_b.Add(arr_a[index]);
+                        indexToSort = indexToSort + 1;
                 }
-            } while (new_arr_b.Count != arr_b.Length);
+            } while (indexToSort != arr_b.Length);
         }
 
         private static bool canTheyBeMadeEqual(int[] arr_a, int[] arr_b)
