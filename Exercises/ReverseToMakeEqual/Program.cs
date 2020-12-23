@@ -19,7 +19,7 @@ namespace ReverseToMakeEqual
                 Console.WriteLine(string.Format("Test Case {0} Failed. ", 5));
             }
             catch { }
-            
+
             Console.WriteLine("Test Complete.");
         }
 
@@ -78,7 +78,7 @@ namespace ReverseToMakeEqual
             if (arr_a.Length != arr_b.Length)
                 return false;
 
-            Dictionary<int, int> valueInArrayA = new Dictionary<int, int>();
+            Dictionary<int, int> valueInArrayA = new Dictionary<int, int>(arr_a.Length);
 
             foreach(int value in arr_a)
             {
