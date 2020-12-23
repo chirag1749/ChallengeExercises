@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 namespace PassingYearbooks
 {
@@ -8,6 +8,8 @@ namespace PassingYearbooks
     {
         static void Main(string[] args)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             testFindSignatureCounts(1, new int[] { 2, 1 }, new int[] { 2, 2 });
             testFindSignatureCounts(2, new int[] { 1, 2 }, new int[] { 1, 1 });
             testFindSignatureCounts(3, new int[] { 3, 1, 2 }, new int[] { 2, 2, 2 });
@@ -15,8 +17,9 @@ namespace PassingYearbooks
             testFindSignatureCounts(5, new int[] { }, new int[] { }, true);
             testFindSignatureCounts(6, null, new int[] { }, true);
             testFindSignatureCounts(7, new int[] { 0 }, new int[] { }, true);
-          
-            Console.WriteLine("Test Complete.");
+            sw.Stop();
+
+            Console.WriteLine(string.Format("Test Complete. Time to Finish {0}.", sw.ElapsedMilliseconds.ToString()));
         }
 
         static void testFindSignatureCounts(int testCaseIdentifier, int[] arr, int[] expectedResult, bool exception = false)
@@ -50,18 +53,22 @@ namespace PassingYearbooks
             return true;
         }
 
-        private static int[] findSignatureCounts(int[] masterPassItToStudent)
+        static int[] findSignatureCounts(int[] masterPassItToStudent)
         {
             if (masterPassItToStudent == null || masterPassItToStudent.Length == 0)
                 throw new Exception("Invalid Parameter.");
 
-            Dictionary<int, Student> studentDictionary = new Dictionary<int, Student>();
+            Dictionary<int, Student> studentDictionary = new Dictionary<int, Student>(masterPassItToStudent.Length);
+            List<int> signCount = new List<int>(masterPassItToStudent.Length);
 
             int[] passItToStudent = masterPassItToStudent;
+            int nonParticpantCount;
 
             do
             {
                 List<int> nextPassItToStudent = new List<int>(passItToStudent.Length);
+                signCount.Clear();
+                nonParticpantCount = 0;
 
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
@@ -100,29 +107,21 @@ namespace PassingYearbooks
 
                     nextPassItToStudent.Add(masterPassItToStudent[studentIdPassTo - 1]);
                 }
-                
-                //All Sign Books
+
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
                     int studentId = index + 1;
-                    studentDictionary[studentId].Sign();
+                    Student student = studentDictionary[studentId];
+                    student.Sign();
+                    signCount.Add(student.GetMyYearBook().GetSignedStudents().Count);
+
+                    if (!student.IsParticipant())
+                        nonParticpantCount++;
                 }
-                
+
                 passItToStudent = nextPassItToStudent.ToArray();
 
-            } while (   //Keep the passing going until all students are not participants
-                        (from student in studentDictionary
-                         where student.Value.IsParticipant() == true
-                         select student).ToList().Count != 0);
-
-
-            //Get Signed Counts for each student
-            List<int> signCount = new List<int>();
-            for (int index = 0; index < masterPassItToStudent.Length; index++)
-            {
-                int studentId = index + 1;
-                signCount.Add(studentDictionary[studentId].GetMyYearBook().GetSignedStudents().Count);
-            }
+            } while (nonParticpantCount != masterPassItToStudent.Length);
 
             return signCount.ToArray();
         }
