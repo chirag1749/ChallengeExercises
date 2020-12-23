@@ -15,7 +15,7 @@ namespace PassingYearbooks
             testFindSignatureCounts(5, new int[] { }, new int[] { }, true);
             testFindSignatureCounts(6, null, new int[] { }, true);
             testFindSignatureCounts(7, new int[] { 0 }, new int[] { }, true);
-
+          
             Console.WriteLine("Test Complete.");
         }
 
@@ -57,31 +57,35 @@ namespace PassingYearbooks
 
             Dictionary<int, Student> studentDictionary = new Dictionary<int, Student>();
 
-            //Add Students to Dictionary and have them Sign their own year book
-            for (int index = 0; index < masterPassItToStudent.Length; index++)
-            {
-                int studentId = masterPassItToStudent[index];
-
-                if (studentId < 1)
-                    throw new Exception("Value less than zero not allowed.");
-
-                Student student = new Student(studentId);
-                studentDictionary.Add(studentId, student);
-
-                student.Sign();
-            }
-
             int[] passItToStudent = masterPassItToStudent;
 
             do
             {
                 List<int> nextPassItToStudent = new List<int>(passItToStudent.Length);
 
-                //Pass the Books
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
                     int studentIdPassFrom = index + 1;
                     int studentIdPassTo = passItToStudent[index];
+
+                    if (studentIdPassTo < 1)
+                        throw new Exception("Value less than zero not allowed.");
+
+                    //If new Student then add to dictionary and sign their yearbook
+                    if (!studentDictionary.ContainsKey(studentIdPassFrom))
+                    {
+                        Student student = new Student(studentIdPassFrom);
+                        studentDictionary.Add(studentIdPassFrom, student);
+                        student.Sign();
+                    }
+
+                    //If new Student then add to dictionary and sign their yearbook
+                    if (!studentDictionary.ContainsKey(studentIdPassTo))
+                    {
+                        Student student = new Student(studentIdPassTo);
+                        studentDictionary.Add(studentIdPassTo, student);
+                        student.Sign();
+                    }
 
                     Student studentPassFrom = studentDictionary[studentIdPassFrom];
                     Student studentPassTo = studentDictionary[studentIdPassTo];
@@ -96,22 +100,21 @@ namespace PassingYearbooks
 
                     nextPassItToStudent.Add(masterPassItToStudent[studentIdPassTo - 1]);
                 }
-
+                
                 //All Sign Books
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
                     int studentId = index + 1;
                     studentDictionary[studentId].Sign();
                 }
-
+                
                 passItToStudent = nextPassItToStudent.ToArray();
-            }
-            while (
-                        //Keep the passing going until all students are not participants
+
+            } while (   //Keep the passing going until all students are not participants
                         (from student in studentDictionary
                          where student.Value.IsParticipant() == true
-                         select student).ToList().Count != 0
-            );
+                         select student).ToList().Count != 0);
+
 
             //Get Signed Counts for each student
             List<int> signCount = new List<int>();
