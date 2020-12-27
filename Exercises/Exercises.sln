@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseToMakeEqual", "Rever
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassingYearbooks", "PassingYearbooks\PassingYearbooks.csproj", "{0AC9ED59-3101-4A30-A612-0E8A512C591B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinumumSwaps", "MinumumSwaps\MinumumSwaps.csproj", "{617263AC-7934-4279-B3B5-70FB2605A8D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,5 +39,9 @@ Global
 		{0AC9ED59-3101-4A30-A612-0E8A512C591B}.Debug|x86.Build.0 = Debug|x86
 		{0AC9ED59-3101-4A30-A612-0E8A512C591B}.Release|x86.ActiveCfg = Release|x86
 		{0AC9ED59-3101-4A30-A612-0E8A512C591B}.Release|x86.Build.0 = Release|x86
+		{617263AC-7934-4279-B3B5-70FB2605A8D5}.Debug|x86.ActiveCfg = Debug|x86
+		{617263AC-7934-4279-B3B5-70FB2605A8D5}.Debug|x86.Build.0 = Debug|x86
+		{617263AC-7934-4279-B3B5-70FB2605A8D5}.Release|x86.ActiveCfg = Release|x86
+		{617263AC-7934-4279-B3B5-70FB2605A8D5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
