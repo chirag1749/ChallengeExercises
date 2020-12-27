@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using PassingYearbooks.Domain;
 
 namespace PassingYearbooks
 {
@@ -56,9 +57,10 @@ namespace PassingYearbooks
         static int[] findSignatureCounts(int[] masterPassItToStudent)
         {
             if (masterPassItToStudent == null || masterPassItToStudent.Length == 0)
-                throw new Exception("Invalid Parameter.");
+                throw new ArgumentException("Invalid Parameter");
 
-            Dictionary<int, Student> studentDictionary = new Dictionary<int, Student>(masterPassItToStudent.Length);
+            IGameBuilder gameBuilder = new GameBuilder();
+            Dictionary<IIdentifier, IParticipant> studentDictionary = new Dictionary<IIdentifier, IParticipant>(masterPassItToStudent.Length);
             List<int> signCount = new List<int>(masterPassItToStudent.Length);
 
             int[] passItToStudent = masterPassItToStudent;
@@ -72,46 +74,31 @@ namespace PassingYearbooks
 
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
-                    int studentIdPassFrom = index + 1;
-                    int studentIdPassTo = passItToStudent[index];
+                    IIdentifier studentIdentifierPassFrom = gameBuilder.CreateIdentifier(index + 1);
+                    IIdentifier studentIdentifierPassTo = gameBuilder.CreateIdentifier(passItToStudent[index]);
 
-                    if (studentIdPassTo < 1)
+                    if (Convert.ToInt32(studentIdentifierPassTo.GetIdentifier()) < 1)
                         throw new Exception("Value less than zero not allowed.");
 
                     //If new Student then add to dictionary and sign their yearbook
-                    if (!studentDictionary.ContainsKey(studentIdPassFrom))
-                    {
-                        Student student = new Student(studentIdPassFrom);
-                        studentDictionary.Add(studentIdPassFrom, student);
-                        student.Sign();
-                    }
+                    IParticipant studentPassFrom = GetOrAddParticipantIfMissing(gameBuilder, studentDictionary, studentIdentifierPassFrom);                    //If new Student then add to dictionary and sign their yearbook
+                    IParticipant studentPassTo = GetOrAddParticipantIfMissing(gameBuilder, studentDictionary, studentIdentifierPassTo);
 
-                    //If new Student then add to dictionary and sign their yearbook
-                    if (!studentDictionary.ContainsKey(studentIdPassTo))
+                    if (!studentPassFrom.Equals(studentPassTo))
                     {
-                        Student student = new Student(studentIdPassTo);
-                        studentDictionary.Add(studentIdPassTo, student);
-                        student.Sign();
-                    }
-
-                    Student studentPassFrom = studentDictionary[studentIdPassFrom];
-                    Student studentPassTo = studentDictionary[studentIdPassTo];
-
-                    if (studentIdPassFrom != studentIdPassTo)
-                    {
-                        YearBook yearBook = studentPassFrom.PassYearBook();
+                        IYearBook yearBook = studentPassFrom.PassYearBook();
                         studentPassTo.RecieveYearBook(yearBook);
                     }
                     else
                         studentPassFrom.NoLongerAllowedToParticipate();
 
-                    nextPassItToStudent.Add(masterPassItToStudent[studentIdPassTo - 1]);
+                    nextPassItToStudent.Add(masterPassItToStudent[passItToStudent[index] - 1]);
                 }
 
                 for (int index = 0; index < passItToStudent.Length; index++)
                 {
-                    int studentId = index + 1;
-                    Student student = studentDictionary[studentId];
+                    IIdentifier studentIdentifier = gameBuilder.CreateIdentifier(index + 1);
+                    IParticipant student = studentDictionary[studentIdentifier];
                     student.Sign();
                     signCount.Add(student.GetMyYearBook().GetSignedStudents().Count);
 
@@ -124,6 +111,18 @@ namespace PassingYearbooks
             } while (nonParticpantCount != masterPassItToStudent.Length);
 
             return signCount.ToArray();
+        }
+
+        private static IParticipant GetOrAddParticipantIfMissing(IGameBuilder gameBuilder, Dictionary<IIdentifier, IParticipant> participantDictionary, IIdentifier participantIdentifier)
+        {
+            if (!participantDictionary.ContainsKey(participantIdentifier))
+            {
+                IParticipant student = gameBuilder.CreateParticipant(participantIdentifier);
+                participantDictionary.Add(participantIdentifier, student);
+                student.Sign();
+            }
+
+            return participantDictionary[participantIdentifier];
         }
     }
 }
