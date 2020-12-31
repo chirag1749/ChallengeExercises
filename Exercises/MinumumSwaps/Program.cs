@@ -52,7 +52,6 @@ namespace MinumumSwaps
             int[] currentIntArray = arr;
             int swapCount = 0;
             
-
             do
             {
                 IChain<int> chain = new IntLeftRightChain(currentIntArray);
