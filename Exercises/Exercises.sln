@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotationalCipher", "Rotatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoisonousPlants", "PoisonousPlants\PoisonousPlants.csproj", "{E793FB04-E496-488F-AD1F-BDD57772A279}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalancedBrackets", "BalancedBrackets\BalancedBrackets.csproj", "{1940B1D8-6FE2-451E-80D1-F12EA660A597}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -55,5 +57,9 @@ Global
 		{E793FB04-E496-488F-AD1F-BDD57772A279}.Debug|x86.Build.0 = Debug|x86
 		{E793FB04-E496-488F-AD1F-BDD57772A279}.Release|x86.ActiveCfg = Release|x86
 		{E793FB04-E496-488F-AD1F-BDD57772A279}.Release|x86.Build.0 = Release|x86
+		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Debug|x86.ActiveCfg = Debug|x86
+		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Debug|x86.Build.0 = Debug|x86
+		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Release|x86.ActiveCfg = Release|x86
+		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
