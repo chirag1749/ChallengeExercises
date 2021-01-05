@@ -11,6 +11,8 @@ namespace BalancedBrackets
             TestIsBracketBalanced(2, "{[(])}", false);
             TestIsBracketBalanced(3, "{{[[(())]]}}", true);
             TestIsBracketBalanced(4, string.Empty, true);
+            TestIsBracketBalanced(5, null, true);
+            TestIsBracketBalanced(6, "", true);
 
             Console.WriteLine("Test Complete");
         }
@@ -35,6 +37,9 @@ namespace BalancedBrackets
 
         public static bool IsBracketBalanced(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return true;
+
             Dictionary<char, char> closeBrackets = new Dictionary<char, char>();
             closeBrackets.Add('}', '{');
             closeBrackets.Add(']', '[');
