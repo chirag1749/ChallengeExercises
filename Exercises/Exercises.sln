@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoisonousPlants", "Poisonou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalancedBrackets", "BalancedBrackets\BalancedBrackets.csproj", "{1940B1D8-6FE2-451E-80D1-F12EA660A597}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContiguousSubArrays", "ContiguousSubArrays\ContiguousSubArrays.csproj", "{5BAE0938-FA07-4CAF-8748-5C949C22FACE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -61,5 +63,9 @@ Global
 		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Debug|x86.Build.0 = Debug|x86
 		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Release|x86.ActiveCfg = Release|x86
 		{1940B1D8-6FE2-451E-80D1-F12EA660A597}.Release|x86.Build.0 = Release|x86
+		{5BAE0938-FA07-4CAF-8748-5C949C22FACE}.Debug|x86.ActiveCfg = Debug|x86
+		{5BAE0938-FA07-4CAF-8748-5C949C22FACE}.Debug|x86.Build.0 = Debug|x86
+		{5BAE0938-FA07-4CAF-8748-5C949C22FACE}.Release|x86.ActiveCfg = Release|x86
+		{5BAE0938-FA07-4CAF-8748-5C949C22FACE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
