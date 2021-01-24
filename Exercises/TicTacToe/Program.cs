@@ -43,7 +43,7 @@ namespace TicTacToe
 
             char playerWinner = DetermineWinner(array);
 
-            if(playerWinner.Equals('X'))
+            if(!playerWinner.Equals('X'))
                 Console.WriteLine("Test Failed.");
 
             Console.WriteLine("Test Complete.");
