@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FibonacciSequence", "Fibona
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexicographicalPermutation", "LexicographicalPermutation\LexicographicalPermutation.csproj", "{1D07825C-4BF6-476E-B365-F907F1CF1968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{A02663CC-6232-4FF7-AB10-4EBD327F1756}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -85,5 +87,9 @@ Global
 		{1D07825C-4BF6-476E-B365-F907F1CF1968}.Debug|x86.Build.0 = Debug|x86
 		{1D07825C-4BF6-476E-B365-F907F1CF1968}.Release|x86.ActiveCfg = Release|x86
 		{1D07825C-4BF6-476E-B365-F907F1CF1968}.Release|x86.Build.0 = Release|x86
+		{A02663CC-6232-4FF7-AB10-4EBD327F1756}.Debug|x86.ActiveCfg = Debug|x86
+		{A02663CC-6232-4FF7-AB10-4EBD327F1756}.Debug|x86.Build.0 = Debug|x86
+		{A02663CC-6232-4FF7-AB10-4EBD327F1756}.Release|x86.ActiveCfg = Release|x86
+		{A02663CC-6232-4FF7-AB10-4EBD327F1756}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
